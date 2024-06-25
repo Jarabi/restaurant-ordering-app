@@ -1,0 +1,23 @@
+:root {
+    --color-accent: #16DB99;
+    --color-muted: #8B8B8B;
+    --color-light: #fff;
+    --color-dark: #000;
+    --color-border: #D2D2D2;
+    --color-item-button-border: #DEDEDE;
+    --color-item-button-add: #3C3C3C;
+    --color-item-button-remove: #BBBBBB;
+    --color-text-total-price: #0E0E0E;
+    --color-card-details: #757575;
+    --color-success: #065F46;
+    --color-success-background: #ECFDF5;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Smythe', system-ui;
+    font-weight: 400;
+    font-size: 16px;
+}
