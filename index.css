@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 :root {
     --color-accent: #16DB99;
     --color-muted: #8B8B8B;
@@ -61,4 +67,73 @@ body {
     font-size: 22px;
     font-weight: 400;
     margin-top: 20px;
+}
+
+/* Menu */
+.menu {
+    margin-top: 20px;
+    padding: 0 46px;
+}
+
+.menu .menu-list {
+    list-style: none;
+}
+
+.menu .menu-list .menu-item {
+    /* display: flex;
+    justify-content: start;
+    align-items: start; */
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    /* gap: 20px; */
+    padding: 50px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.menu .menu-list .menu-item .menu-item-emoji {
+    font-size: 4.5rem;
+}
+
+.menu .menu-list .menu-item .menu-item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: 10px;
+}
+
+.menu .menu-list .menu-item .menu-item-details h2 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.menu .menu-list .menu-item .menu-item-details .menu-item-ingredients {
+    font-size: 16px;
+    color: var(--color-card-details);
+}
+
+.menu .menu-list .menu-item .menu-item-details .menu-item-price {
+    font-size: 20px;
+}
+
+.menu .menu-list .menu-item .add-button-div {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.menu .menu-list .menu-item .menu-item-add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-light);
+    border: 1px solid var(--color-item-button-border);
+    border-radius: 50%;
+    color: var(--color-item-button-add);
+    font-family: 'Inter', sans-serif;
+    font-size: 25px;
+    font-weight: 200;
+    cursor: pointer;
 }
