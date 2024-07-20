@@ -18,8 +18,18 @@ mainEl.addEventListener('click', function (e) {
         const selectedItem = MENU_ITEMS.find((item) => item.id === itemId);
 
         selectedMenuItems.push(selectedItem);
-        populateCheckoutForm();
     }
+
+    if (e.target.classList.value === 'remove-item') {
+        const itemId = parseInt(e.target.dataset.itemId);
+        const selectedItemIndex = selectedMenuItems.findIndex(
+            (item) => item.id === itemId
+        );
+
+        selectedMenuItems.splice(selectedItemIndex, 1);
+    }
+
+    populateCheckoutForm();
 });
 
 // ++++++++++++++++ FUNCTIONS ++++++++++++++++ //
@@ -257,6 +267,8 @@ function populateCheckoutForm() {
             (acc, item) => acc + item.price,
             0
         );
-        totalPriceValue.textContent = totalPrice;
+        totalPriceValue.textContent = `$${totalPrice}`;
+    } else {
+        document.getElementById('payment-form').classList.add('hide');
     }
 }
