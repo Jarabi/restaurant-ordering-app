@@ -14,6 +14,7 @@
     --color-item-button-add: #3C3C3C;
     --color-item-button-remove: #BBBBBB;
     --color-text-total-price: #0E0E0E;
+    --color-border-order-list: #393333;
     --color-card-details: #757575;
     --color-success: #065F46;
     --color-success-background: #ECFDF5;
@@ -30,9 +31,13 @@ body {
     background-color: var(--color-body-background);
 }
 
+.hide {
+    display: none;
+}
+
 .container {
     max-width: 600px;
-    height: 800px;
+    /* height: 800px; */
     margin: 100px auto;
     background-color: var(--color-light);
 }
@@ -69,20 +74,19 @@ body {
     margin-top: 20px;
 }
 
-/* Menu */
-.menu {
-    margin-top: 20px;
-    padding: 0 46px;
+/* Main */
+
+#main {
+    padding: 0 46px 50px;
 }
 
-.menu .menu-list {
+/* Menu items */
+
+.menu-list {
     list-style: none;
 }
 
-.menu .menu-list .menu-item {
-    /* display: flex;
-    justify-content: start;
-    align-items: start; */
+.menu-list .menu-item {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     /* gap: 20px; */
@@ -90,11 +94,11 @@ body {
     border-bottom: 1px solid var(--color-border);
 }
 
-.menu .menu-list .menu-item .menu-item-emoji {
+.menu-list .menu-item .menu-item-emoji {
     font-size: 4.5rem;
 }
 
-.menu .menu-list .menu-item .menu-item-details {
+.menu-list .menu-item .menu-item-details {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -102,27 +106,27 @@ body {
     gap: 10px;
 }
 
-.menu .menu-list .menu-item .menu-item-details h2 {
+.menu-list .menu-item .menu-item-details h2 {
     font-size: 24px;
     font-weight: 400;
 }
 
-.menu .menu-list .menu-item .menu-item-details .menu-item-ingredients {
+.menu-list .menu-item .menu-item-details .menu-item-ingredients {
     font-size: 16px;
     color: var(--color-card-details);
 }
 
-.menu .menu-list .menu-item .menu-item-details .menu-item-price {
+.menu-list .menu-item .menu-item-details .menu-item-price {
     font-size: 20px;
 }
 
-.menu .menu-list .menu-item .add-button-div {
+.menu-list .menu-item .add-button-div {
     display: flex;
     justify-content: end;
     align-items: center;
 }
 
-.menu .menu-list .menu-item .menu-item-add-button {
+.menu-list .menu-item .menu-item-add-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,5 +139,85 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 25px;
     font-weight: 200;
+    cursor: pointer;
+}
+
+/* Payment form */
+
+.payment-form {
+    padding: 40px 0;
+}
+
+.payment-form-title {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.payment-form-items {
+    list-style: none;
+    margin-bottom: 14px;
+}
+
+.payment-form-items .payment-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+
+.payment-form-items .payment-item:last-child {
+    padding-bottom: 10px;
+}
+
+.payment-form-items .payment-item .payment-item-name {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.payment-form-items .payment-item .payment-item-name span.remove-item {
+    font-family: Verdana, sans-serif;
+    font-size: 10px;
+    color: var(--color-item-button-remove);
+    margin-left: 13px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.payment-form-items .payment-item .payment-item-price {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.payment-form-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-top: 2px solid var(--color-border-order-list);
+}
+
+.payment-form-total .payment-form-total-label,
+.payment-form-total .payment-form-total-price {
+    font-weight: 400;
+    color: var(--color-text-total-price);
+}
+.payment-form-total .payment-form-total-label {
+    font-size: 24px;
+}
+
+.payment-form-total .payment-form-total-value {
+    font-size: 20px;
+}
+
+.payment-form-button {
+    width: 100%;
+    padding: 15px 0;
+    background-color: var(--color-accent);
+    color: var(--color-light);
+    font-family: Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 3px;
     cursor: pointer;
 }
