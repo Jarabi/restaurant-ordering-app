@@ -18,6 +18,7 @@ mainEl.addEventListener('click', function (e) {
         const selectedItem = MENU_ITEMS.find((item) => item.id === itemId);
 
         selectedMenuItems.push(selectedItem);
+        populateCheckoutForm();
     }
 
     if (e.target.classList.value === 'remove-item') {
@@ -27,9 +28,28 @@ mainEl.addEventListener('click', function (e) {
         );
 
         selectedMenuItems.splice(selectedItemIndex, 1);
+        populateCheckoutForm();
     }
 
-    populateCheckoutForm();
+    if (e.target.id === 'complete-order-button') {
+        document.querySelector('.card-details-modal').classList.remove('hide');
+    }
+
+    if (e.target.id === 'checkout-button') {
+        e.preventDefault();
+        const cardDetailsForm = document.querySelector('.card-details-form');
+        const cardholderName =
+            cardDetailsForm.querySelector('#cardholder-name').value;
+        const cardNumber = cardDetailsForm.querySelector('#card-number').value;
+        const cvv = cardDetailsForm.querySelector('#cvv').value;
+
+        if (cardholderName && cardNumber && cvv) {
+            document.querySelector('.card-details-modal').classList.add('hide');
+            selectedMenuItems.length = 0;
+            populateCheckoutForm();
+            confirmPayment(cardholderName);
+        }
+    }
 });
 
 // ++++++++++++++++ FUNCTIONS ++++++++++++++++ //
@@ -41,6 +61,7 @@ mainEl.addEventListener('click', function (e) {
 function menuApp() {
     menuList(MENU_ITEMS);
     checkoutForm();
+    cardDetailsModal();
 }
 
 /**
@@ -117,7 +138,7 @@ function createItemDetailsElement(item) {
     // Create item price element
     const itemPriceEl = document.createElement('p');
     itemPriceEl.classList.add('menu-item-price');
-    itemPriceEl.textContent = `$${item.price}`;
+    itemPriceEl.textContent = `Kes. ${item.price.toLocaleString()}`;
 
     // Append elements to item details element
     itemDetailsEl.appendChild(itemNameEl);
@@ -151,7 +172,7 @@ function createButtonEl(itemId) {
  */
 function checkoutForm() {
     // Create payment form element
-    const paymentFormEl = document.createElement('form');
+    const paymentFormEl = document.createElement('div');
     paymentFormEl.setAttribute('id', 'payment-form');
     paymentFormEl.classList.add('payment-form', 'hide');
 
@@ -167,7 +188,8 @@ function checkoutForm() {
 
     // Create payment form submit button element
     const paymentFormSubmitButtonEl = document.createElement('button');
-    paymentFormSubmitButtonEl.classList.add('payment-form-button');
+    paymentFormSubmitButtonEl.setAttribute('id', 'complete-order-button');
+    paymentFormSubmitButtonEl.classList.add('form-btn', 'payment-form-button');
     paymentFormSubmitButtonEl.textContent = 'Complete order';
 
     // Append elements to payment form
@@ -206,7 +228,7 @@ function createListItem(item) {
     // Create item price element
     const paymentItemPriceEl = document.createElement('p');
     paymentItemPriceEl.classList.add('payment-item-price');
-    paymentItemPriceEl.textContent = `$${item.price}`;
+    paymentItemPriceEl.textContent = `Kes. ${item.price.toLocaleString()}`;
 
     paymentItemEl.appendChild(paymentItemNameEl);
     paymentItemEl.appendChild(paymentItemPriceEl);
@@ -267,8 +289,90 @@ function populateCheckoutForm() {
             (acc, item) => acc + item.price,
             0
         );
-        totalPriceValue.textContent = `$${totalPrice}`;
+        totalPriceValue.textContent = `Kes. ${totalPrice.toLocaleString()}`;
     } else {
         document.getElementById('payment-form').classList.add('hide');
     }
+}
+
+/**
+ * Function to create the card details modal
+ * @returns {void}
+ */
+function cardDetailsModal() {
+    const formInputs = [
+        {
+            label: 'Enter your name',
+            type: 'text',
+            id: 'cardholder-name',
+        },
+        {
+            label: 'Enter card number',
+            type: 'text',
+            id: 'card-number',
+        },
+        {
+            label: 'Enter CVV',
+            type: 'text',
+            id: 'cvv',
+        },
+    ];
+
+    const cardDetailsModal = document.createElement('form');
+    cardDetailsModal.classList.add('card-details-modal', 'hide');
+
+    const formHeading = document.createElement('h2');
+    formHeading.classList.add('form-heading');
+    formHeading.textContent = 'Enter card details';
+
+    const cardDetailsForm = document.createElement('div');
+    cardDetailsForm.classList.add('card-details-form');
+
+    // Card inputs
+    formInputs.forEach((input) => {
+        const formInput = document.createElement('input');
+        formInput.classList.add('card-detail-input');
+        formInput.setAttribute('type', input.type);
+        formInput.setAttribute('id', input.id);
+        formInput.setAttribute('placeholder', input.label);
+        formInput.setAttribute('required', true);
+
+        cardDetailsForm.appendChild(formInput);
+    });
+
+    // Payment button
+    const paymentButton = document.createElement('button');
+    paymentButton.setAttribute('id', 'checkout-button');
+    paymentButton.setAttribute('type', 'submit');
+    paymentButton.classList.add('form-btn', 'payment-button');
+    paymentButton.textContent = 'Pay';
+
+    cardDetailsModal.appendChild(formHeading);
+    cardDetailsModal.appendChild(cardDetailsForm);
+    cardDetailsModal.appendChild(paymentButton);
+
+    mainEl.appendChild(cardDetailsModal);
+}
+
+function confirmPayment(cardholderName) {
+    const paymentFormEl = document.getElementById('payment-form');
+    const paymentFormListEl = paymentFormEl.querySelector(
+        '.payment-form-items'
+    );
+    const totalPriceValue = paymentFormEl.querySelector(
+        '.payment-form-total-value'
+    );
+
+    paymentFormListEl.innerHTML = '';
+    totalPriceValue.textContent = 0;
+
+    const paymentConfirmation = document.createElement('div');
+    paymentConfirmation.classList.add('payment-confirmation');
+
+    const confirmationMessage = document.createElement('p');
+    confirmationMessage.classList.add('confirmation-message');
+    confirmationMessage.textContent = `Thank, ${cardholderName}! Your order is on its way!`;
+
+    paymentConfirmation.appendChild(confirmationMessage);
+    mainEl.appendChild(paymentConfirmation);
 }
